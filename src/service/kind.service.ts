@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateKindDto } from '../dto/kind/create-kind.dto';
-import { UpdateKindDto } from '../dto/kind/update-kind.dto';
+// import { UpdateKindDto } from '../dto/kind/update-kind.dto';
 import { setSuccessResponse } from '../config/response/success';
 import { KindModel } from '../model/kind.model';
 import { CategoryModel } from '../model/category.model';
