@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { KindService } from '../service/kind.service';
+import { Body, Controller, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Types } from 'mongoose';
 import { CreateKindDto } from '../dto/kind/create-kind.dto';
-// import { UpdateKindDto } from '../kind/dto/update-kind.dto';
+import { KindService } from '../service/kind.service';
+import { UpdateKindDto } from '../dto/kind/update-kind.dto';
 
 @Controller('kind')
 export class KindController {
@@ -12,23 +13,31 @@ export class KindController {
         return this.kindService.create(createKindDto);
     }
 
-    // @Get()
-    // findAll() {
-    //     return this.kindService.findAll();
-    // }
+    @Get()
+    findAll(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+        @Query('pageSize', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
+        @Query('categoryId') categoryId: string,
+    ) {
+        let filter = {};
+        if (categoryId) {
+            filter = { category: new Types.ObjectId(categoryId) };
+        }
+        return this.kindService.findAll(page, pageSize, filter);
+    }
 
-    // @Get(':id')
-    // findOne(@Param('id') id: string) {
-    //     return this.kindService.findOne(+id);
-    // }
+    @Get(':id')
+    findOne(@Param('id') id: string) {
+        return this.kindService.findOne(id);
+    }
 
-    // @Patch(':id')
-    // update(@Param('id') id: string, @Body() updateKindDto: UpdateKindDto) {
-    //     return this.kindService.update(+id, updateKindDto);
-    // }
+    @Put(':id')
+    update(@Param('id') id: string, @Body() updateKindDto: UpdateKindDto) {
+        return this.kindService.update(id, updateKindDto);
+    }
 
-    // @Delete(':id')
-    // remove(@Param('id') id: string) {
-    //     return this.kindService.remove(+id);
-    // }
+    @Delete(':id')
+    delete(@Param('id') id: string) {
+        return this.kindService.delete(id);
+    }
 }
