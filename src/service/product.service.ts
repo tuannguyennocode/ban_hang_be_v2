@@ -1,10 +1,10 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { errorMessages } from '../config/response/errors/custom';
 import { SuccessResponse, setSuccessResponse } from '../config/response/success';
-import { ProductModel } from 'src/model/product.model';
-import { CreateProductDto } from 'src/dto/product/create-product.dto';
-import { KindModel } from 'src/model/kind.model';
-import { UpdateProductDto } from 'src/dto/product/update-product.dto';
+import { ProductModel } from '../model/product.model';
+import { CreateProductDto } from '../dto/product/create-product.dto';
+import { KindModel } from '../model/kind.model';
+import { UpdateProductDto } from '../dto/product/update-product.dto';
 
 @Injectable()
 export class ProductService {

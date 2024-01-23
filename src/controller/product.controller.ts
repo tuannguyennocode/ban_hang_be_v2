@@ -1,8 +1,8 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { CreateProductDto } from 'src/dto/product/create-product.dto';
-import { UpdateProductDto } from 'src/dto/product/update-product.dto';
-import { ProductService } from 'src/service/product.service';
+import { CreateProductDto } from '../dto/product/create-product.dto';
+import { UpdateProductDto } from '../dto/product/update-product.dto';
+import { ProductService } from '../service/product.service';
 
 @Controller('product')
 export class ProductController {
