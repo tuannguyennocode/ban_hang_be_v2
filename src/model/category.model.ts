@@ -6,12 +6,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateCategoryDto } from '../dto/category/create-category.dto';
 import { UpdateCategoryDto } from '../dto/category/update-category.dto';
 import { Kind } from '../schema/kind.schema';
+import { Product } from 'src/schema/product.schema';
 
 @Injectable()
 export class CategoryModel {
     constructor(
         @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
         @InjectModel(Kind.name) private readonly kindModel: Model<Kind>,
+        @InjectModel(Product.name) private readonly productModel: Model<Product>,
     ) {}
     async create(createCategoryDto: CreateCategoryDto) {
         const category = this.categoryModel.create(createCategoryDto);
@@ -46,6 +48,10 @@ export class CategoryModel {
         await this.categoryModel.updateOne({ _id: categoryId }, { $push: { kinds: kindId } });
     }
     async deleteCategory(id: string): Promise<Category> {
+        const kinds = await this.kindModel.find({ category: new Types.ObjectId(id) });
+        for (const kind of kinds) {
+            await this.productModel.deleteMany({ kind: kind._id });
+        }
         await this.kindModel.deleteMany({ category: new Types.ObjectId(id) });
         return await this.categoryModel.findByIdAndDelete(id);
     }

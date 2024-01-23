@@ -8,6 +8,7 @@ import { KindModule } from './module/kind.module';
 import { Category, CategorySchema } from './schema/category.schema';
 import { Kind, KindSchema } from './schema/kind.schema';
 import { CategoryModel } from './model/category.model';
+import { ProductModule } from './module/product.module';
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -21,6 +22,7 @@ const ENV = process.env.NODE_ENV;
         }),
         CategoryModule,
         KindModule,
+        ProductModule,
     ],
     controllers: [AppController],
     providers: [AppService],

@@ -69,6 +69,12 @@ export const errorMessages = {
             code: '000-KIND-NOT-FOUND',
         },
     },
+    product: {
+        notFound: {
+            message: 'Product not found!',
+            code: '000-PRODUCT-NOT-FOUND',
+        },
+    },
     masterDataType: {
         masterDataTypeAlreadyExist: {
             message: 'master data type này đã tồn tại',
