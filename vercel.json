@@ -3,7 +3,10 @@
     "builds": [
         {
             "src": "src/main.ts",
-            "use": "now-node"
+            "use": "now-node",
+            "env": {
+                "NODE_OPTIONS": "--ignore-errors=MODULE_NOT_FOUND"
+            }
         }
     ],
     "routes": [
