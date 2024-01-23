@@ -6,7 +6,7 @@ import { Category, CategorySchema } from '../schema/category.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Kind, KindSchema } from '../schema/kind.schema';
 import { CategoryModel } from '../model/category.model';
-import { Product, ProductSchema } from '@schema/product.schema';
+import { Product, ProductSchema } from 'schema/product.schema';
 
 @Module({
     imports: [

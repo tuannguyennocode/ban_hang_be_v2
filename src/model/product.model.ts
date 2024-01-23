@@ -1,10 +1,10 @@
 import { Model, Types } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Product } from '@schema/product.schema';
-import { CreateProductDto } from '@dto/product/create-product.dto';
-import { UpdateProductDto } from '@dto/product/update-product.dto';
-import { Kind } from '@schema/kind.schema';
+import { Product } from 'schema/product.schema';
+import { CreateProductDto } from 'dto/product/create-product.dto';
+import { UpdateProductDto } from 'dto/product/update-product.dto';
+import { Kind } from 'schema/kind.schema';
 
 @Injectable()
 export class ProductModel {
