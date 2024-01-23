@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { ProductService } from '../service/product.service';
 import { ProductController } from '../controller/product.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Product, ProductSchema } from 'src/schema/product.schema';
-import { Kind, KindSchema } from 'src/schema/kind.schema';
-import { ProductModel } from 'src/model/product.model';
-import { KindModel } from 'src/model/kind.model';
-import { CategoryModel } from 'src/model/category.model';
-import { Category, CategorySchema } from 'src/schema/category.schema';
+import { Product, ProductSchema } from '@schema/product.schema';
+import { Kind, KindSchema } from '@schema/kind.schema';
+import { ProductModel } from '@model/product.model';
+import { KindModel } from '@model/kind.model';
+import { CategoryModel } from '@model/category.model';
+import { Category, CategorySchema } from '@schema/category.schema';
 
 @Module({
     imports: [

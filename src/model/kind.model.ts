@@ -6,7 +6,7 @@ import { CreateKindDto } from '../dto/kind/create-kind.dto';
 import { UpdateKindDto } from '../dto/kind/update-kind.dto';
 import { Category } from '../schema/category.schema';
 import { Kind } from '../schema/kind.schema';
-import { Product } from 'src/schema/product.schema';
+import { Product } from '@schema/product.schema';
 
 @Injectable()
 export class KindModel {

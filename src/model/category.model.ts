@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateCategoryDto } from '../dto/category/create-category.dto';
 import { UpdateCategoryDto } from '../dto/category/update-category.dto';
 import { Kind } from '../schema/kind.schema';
-import { Product } from 'src/schema/product.schema';
+import { Product } from '@schema/product.schema';
 
 @Injectable()
 export class CategoryModel {
