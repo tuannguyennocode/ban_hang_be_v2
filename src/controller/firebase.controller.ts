@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FirebaseService } from '../service/firebase.service';
 import { Response } from 'express';
@@ -24,7 +24,11 @@ export class FirebaseController {
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
-    uploadImage(@UploadedFile() file: any) {
+    uploadImage(@UploadedFile() file: Express.Multer.File) {
+        if (!file) {
+            throw new BadRequestException('No file uploaded');
+        }
+
         return this.firebaseService.uploadFile(file);
     }
 }
