@@ -1,7 +1,7 @@
-import { BadRequestException, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { FirebaseService } from '../service/firebase.service';
 import { Response } from 'express';
+import { FirebaseService } from '../service/firebase.service';
 
 @Controller('file')
 export class FirebaseController {
@@ -18,7 +18,7 @@ export class FirebaseController {
             });
             res.send(fileBuffer);
         } catch (error) {
-            res.status(500).send('Download file failed');
+            res.status(500).send(error);
         }
     }
 
