@@ -45,13 +45,19 @@ export class FirebaseService {
         const fileUpload = bucket.file(fileName);
         try {
             const fileReadStream = Readable.from(file.buffer);
-            fileReadStream.pipe(
-                fileUpload.createWriteStream({
-                    metadata: {
-                        contentType: file.mimetype,
-                    },
-                }),
-            );
+
+            await new Promise((resolve, reject) => {
+                fileReadStream
+                    .pipe(
+                        fileUpload.createWriteStream({
+                            metadata: {
+                                contentType: file.mimetype,
+                            },
+                        }),
+                    )
+                    .on('error', reject)
+                    .on('finish', resolve);
+            });
             return setSuccessResponse('Upload file success', { fileName });
         } catch (error) {
             throw new ConflictException(error);
