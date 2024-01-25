@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { CategoryModule } from './module/category.module';
+import { FirebaseModule } from './module/firebase.module';
 import { KindModule } from './module/kind.module';
-import { Category, CategorySchema } from './schema/category.schema';
-import { Kind, KindSchema } from './schema/kind.schema';
-import { CategoryModel } from './model/category.model';
 import { ProductModule } from './module/product.module';
 
 const ENV = process.env.NODE_ENV;
@@ -23,6 +21,7 @@ const ENV = process.env.NODE_ENV;
         CategoryModule,
         KindModule,
         ProductModule,
+        FirebaseModule,
     ],
     controllers: [AppController],
     providers: [AppService],
