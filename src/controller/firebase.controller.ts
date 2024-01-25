@@ -25,10 +25,6 @@ export class FirebaseController {
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
     uploadImage(@UploadedFile() file: Express.Multer.File) {
-        if (!file) {
-            throw new BadRequestException('No file uploaded');
-        }
-
         return this.firebaseService.uploadFile(file);
     }
 }
