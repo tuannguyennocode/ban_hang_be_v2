@@ -38,7 +38,7 @@ export class FirebaseService {
         }
     }
 
-    async uploadFile(file: Express.Multer.File): Promise<SuccessResponse> {
+    async uploadFile(file: any): Promise<SuccessResponse> {
         const storage = this.getStorageInstance();
         const bucket = storage.bucket();
         const fileName = `${Date.now()}_${file.originalname}`;

@@ -24,7 +24,7 @@ export class FirebaseController {
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
-    uploadImage(@UploadedFile() file: Express.Multer.File) {
+    uploadImage(@UploadedFile() file: any) {
         return this.firebaseService.uploadFile(file);
     }
 }
