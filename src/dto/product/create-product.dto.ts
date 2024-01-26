@@ -19,7 +19,7 @@ export class CreateProductDto extends BaseDto {
 
     material: string;
 
-    image: string;
+    image: string[];
 
     @IsOptional()
     @IsNumber({}, { message: 'quantity must be a number' })

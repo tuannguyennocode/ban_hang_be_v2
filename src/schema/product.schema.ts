@@ -26,7 +26,7 @@ export class Product extends BaseSchemaProps {
     material: string;
 
     @Prop()
-    image: string;
+    image: string[];
 
     @Prop()
     quantity: number;
