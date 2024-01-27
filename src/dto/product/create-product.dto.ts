@@ -13,11 +13,11 @@ export class CreateProductDto extends BaseDto {
     @IsNumber({}, { message: 'price must be a number' })
     price: number;
 
-    size: string;
+    size: string[];
 
-    color: string;
+    color: string[];
 
-    material: string;
+    material: string[];
 
     image: string[];
 

@@ -17,13 +17,13 @@ export class Product extends BaseSchemaProps {
     price: number;
 
     @Prop()
-    size: string;
+    size: string[];
 
     @Prop()
-    color: string;
+    color: string[];
 
     @Prop()
-    material: string;
+    material: string[];
 
     @Prop()
     image: string[];
