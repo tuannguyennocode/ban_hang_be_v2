@@ -24,12 +24,13 @@ export class CategoryModel {
         pageSize: number,
         sortBy: string,
         sortOrder: 'ASC' | 'DESC' = 'DESC',
+        filter,
     ): Promise<[Category[], number]> {
         const skip = (page - 1) * pageSize;
         const limit = pageSize;
         return await Promise.all([
             this.categoryModel
-                .find()
+                .find(filter)
                 .skip(skip)
                 .limit(limit)
                 .sort({ [sortBy]: sortOrder === 'DESC' ? -1 : 1 }),

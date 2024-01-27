@@ -16,8 +16,13 @@ export class CategoryController {
     findAll(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
         @Query('pageSize', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
+        @Query('name') name: string,
     ) {
-        return this.categoryService.findAll(page, pageSize);
+        let filter = {};
+        if (name) {
+            filter = { name: { $regex: new RegExp(name, 'i') } };
+        }
+        return this.categoryService.findAll(page, pageSize, filter);
     }
 
     @Get(':id')

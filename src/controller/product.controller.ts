@@ -18,10 +18,14 @@ export class ProductController {
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
         @Query('pageSize', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
         @Query('kindId') kindId: string,
+        @Query('name') name: string,
     ) {
         let filter = {};
         if (kindId) {
             filter = { kind: new Types.ObjectId(kindId) };
+        }
+        if (name) {
+            filter = { ...filter, name: { $regex: new RegExp(name, 'i') } };
         }
         return this.productService.findAll(page, pageSize, filter);
     }

@@ -18,10 +18,14 @@ export class KindController {
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
         @Query('pageSize', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
         @Query('categoryId') categoryId: string,
+        @Query('name') name: string,
     ) {
         let filter = {};
         if (categoryId) {
             filter = { category: new Types.ObjectId(categoryId) };
+        }
+        if (name) {
+            filter = { ...filter, name: { $regex: new RegExp(name, 'i') } };
         }
         return this.kindService.findAll(page, pageSize, filter);
     }
