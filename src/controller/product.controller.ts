@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { CreateProductDto } from '../dto/product/create-product.dto';
 import { UpdateProductDto } from '../dto/product/update-product.dto';
 import { ProductService } from '../service/product.service';
+import { Public } from '../constant';
 
 @Controller('product')
 export class ProductController {
@@ -13,6 +14,7 @@ export class ProductController {
         return this.productService.create(createProductDto);
     }
 
+    @Public()
     @Get()
     findAll(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
@@ -30,6 +32,7 @@ export class ProductController {
         return this.productService.findAll(page, pageSize, filter);
     }
 
+    @Public()
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.productService.findOne(id);

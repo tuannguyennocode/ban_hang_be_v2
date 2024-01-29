@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { CreateKindDto } from '../dto/kind/create-kind.dto';
 import { KindService } from '../service/kind.service';
 import { UpdateKindDto } from '../dto/kind/update-kind.dto';
+import { Public } from '../constant';
 
 @Controller('kind')
 export class KindController {
@@ -14,6 +15,7 @@ export class KindController {
     }
 
     @Get()
+    @Public()
     findAll(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
         @Query('pageSize', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
@@ -30,6 +32,7 @@ export class KindController {
         return this.kindService.findAll(page, pageSize, filter);
     }
 
+    @Public()
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.kindService.findOne(id);

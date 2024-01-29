@@ -2,7 +2,6 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { SuccessResponse, setSuccessResponse } from '../config/response/success';
 import { Readable } from 'stream';
-
 @Injectable()
 export class FirebaseService {
     private readonly storage: admin.storage.Storage;

@@ -1,124 +1,66 @@
 export interface ErrorBody extends Error {
     code: string;
 }
+const codeError = {
+    NOT_FOUND: '000-',
+    IS_EXISTED: '001-',
+    NOT_MATCH: '002-',
+    NOT_ALLOWED: '003-',
+    UNKNOWN: '004-',
+    SERVER_ERROR: '005-',
+};
 
 export const errorMessages = {
     auth: {
-        wrongCredentials: {
-            message: 'Tên tài khoản hoặc mật khẩu không đúng',
-            code: '60001',
-        },
-        userNameAlreadyExist: {
-            message: 'Tài khoản này đã tồn tại',
-            code: '60002',
-        },
-        emailAlreadyExist: {
-            message: 'Email này đã được sử dụng',
-            code: '60003',
-        },
-        expiredToken: {
-            message: 'token expired',
-            code: '60004',
-        },
-        invlidToken: {
-            message: 'invlid token',
-            code: '60005',
-        },
         notAllowed: {
-            message: 'not allowed',
-            code: '60006',
+            message: 'No access!',
+            code: codeError.NOT_ALLOWED + 'NO-ACCESS',
         },
-    },
-    jobPosting: {
-        jobPostingAlreadyExist: {
-            message: 'Bài tuyển dụng này đã tồn tại',
-            code: '60201',
-        },
-        jobPostingNotFound: {
-            message: 'Không tìm thấy bài tuyển dụng',
-            code: '60202',
-        },
-    },
-    company: {
-        companyNameAlreadyExist: {
-            message: 'Tên công ty này đã tồn tại',
-            code: '70201-Name',
-        },
-        companyEmailAlreadyExist: {
-            message: 'Email của công ty này đã tồn tại',
-            code: '70201-Email',
-        },
-        companyPhoneNumberAlreadyExist: {
-            message: 'Số điện thoại ty này đã tồn tại',
-            code: '70201-Phone',
-        },
-        companyNotFound: {
-            message: 'Không tìm thấy công ty',
-            code: '70202',
+        decodeTokenFailed: {
+            message: 'Decode token failed!',
+            code: codeError.SERVER_ERROR + 'DECODE-TOKEN-FAILED',
         },
     },
     category: {
         notFound: {
             message: 'Category not found!',
-            code: '000-CATEGORY-NOT-FOUND',
+            code: codeError.NOT_FOUND + 'CATEGORY-NOT-FOUND',
         },
     },
     kind: {
         notFound: {
             message: 'Kind not found!',
-            code: '000-KIND-NOT-FOUND',
+            code: codeError.NOT_FOUND + 'KIND-NOT-FOUND',
         },
     },
     product: {
         notFound: {
             message: 'Product not found!',
-            code: '000-PRODUCT-NOT-FOUND',
-        },
-    },
-    masterDataType: {
-        masterDataTypeAlreadyExist: {
-            message: 'master data type này đã tồn tại',
-            code: '70203',
-        },
-        masterDataTypeNotFound: {
-            message: 'Không tìm thấy master data type',
-            code: '70203',
-        },
-    },
-    recruitment: {
-        recruitmentAlreadyExist: {
-            message: 'recruitment đã tồn tại',
-            code: '70204',
-        },
-        recruitmentNotFound: {
-            message: 'Không tìm thấy recruitment',
-            code: '70205',
+            code: codeError.NOT_FOUND + 'PRODUCT-NOT-FOUND',
         },
     },
     user: {
-        notFound: {
-            message: 'Không tìm thấy người dùng',
-            code: '60101',
+        wrongCredentials: {
+            message: 'Username or password is not correct!',
+            code: codeError.NOT_FOUND + 'USERNAME-OR-PASSWORD-NOT-CORRECT',
         },
-        existCompany: {
-            message: 'Mỗi HR chỉ được tạo 1 company',
-            code: '60102',
+        emailAlreadyExist: {
+            message: 'Email is being used!',
+            code: codeError.IS_EXISTED + 'EMAIL-IS-EXISTED',
         },
-        wrongRole: {
-            message: 'Ứng viên không có quyền tạo company',
-            code: '60102',
+        phoneAlreadyExist: {
+            message: 'Phone is being used!',
+            code: codeError.IS_EXISTED + 'PHONE-IS-EXISTED',
         },
-        global: {
-            internalError: {
-                message: 'something went wrong',
-                code: '70000',
-            },
+        passwordConfirmNotMatch: {
+            message: 'Password confirm is not match!',
+            code: codeError.NOT_MATCH + 'PASSWORD-CONFIRM-NOT-MATCH',
         },
     },
     global: {
         internalError: {
-            message: 'something went wrong',
-            code: '70000',
+            message: 'Something went wrong',
+            code: codeError.UNKNOWN + 'UNKNOWN-ERROR',
         },
     },
 };

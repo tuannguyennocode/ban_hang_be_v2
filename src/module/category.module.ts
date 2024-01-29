@@ -8,6 +8,7 @@ import { KindModel } from '../model/kind.model';
 import { Kind, KindSchema } from '../schema/kind.schema';
 import { ProductModel } from '../model/product.model';
 import { Product, ProductSchema } from '../schema/product.schema';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
     imports: [
@@ -18,6 +19,6 @@ import { Product, ProductSchema } from '../schema/product.schema';
         ]),
     ],
     controllers: [CategoryController],
-    providers: [CategoryService, CategoryModel, KindModel, ProductModel],
+    providers: [CategoryService, CategoryModel, KindModel, ProductModel, JwtService],
 })
 export class CategoryModule {}

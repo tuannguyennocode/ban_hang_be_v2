@@ -24,7 +24,7 @@ export class CategoryModel {
         pageSize: number,
         sortBy: string,
         sortOrder: 'ASC' | 'DESC' = 'DESC',
-        filter,
+        filter: object,
     ): Promise<[Category[], number]> {
         const skip = (page - 1) * pageSize;
         const limit = pageSize;
