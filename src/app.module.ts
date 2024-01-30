@@ -41,17 +41,17 @@ const ENV = process.env.NODE_ENV;
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer;
-        // .apply(AdminRolePermissionMiddleware)
-        // .exclude(
-        //     { path: 'category', method: RequestMethod.GET },
-        //     { path: 'category/:id', method: RequestMethod.GET },
-        //     { path: 'kind', method: RequestMethod.GET },
-        //     { path: 'kind/:id', method: RequestMethod.GET },
-        //     { path: 'product', method: RequestMethod.GET },
-        //     { path: 'product/:id', method: RequestMethod.GET },
-        //     'auth/(.*)',
-        // )
-        // .forRoutes('*');
+        consumer
+            .apply(AdminRolePermissionMiddleware)
+            .exclude(
+                { path: 'category', method: RequestMethod.GET },
+                // { path: 'category/:id', method: RequestMethod.GET },
+                // { path: 'kind', method: RequestMethod.GET },
+                // { path: 'kind/:id', method: RequestMethod.GET },
+                // { path: 'product', method: RequestMethod.GET },
+                // { path: 'product/:id', method: RequestMethod.GET },
+                'auth/(.*)',
+            )
+            .forRoutes('*');
     }
 }
