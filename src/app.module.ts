@@ -12,6 +12,9 @@ import { FirebaseModule } from './module/firebase.module';
 import { KindModule } from './module/kind.module';
 import { ProductModule } from './module/product.module';
 import { UserModule } from './module/user.module';
+import { CategoryController } from './controller/category.controller';
+import { KindController } from './controller/kind.controller';
+import { ProductController } from './controller/product.controller';
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -41,15 +44,17 @@ const ENV = process.env.NODE_ENV;
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(AdminRolePermissionMiddleware).exclude(
-            { path: 'category', method: RequestMethod.GET },
-            // { path: 'category/:id', method: RequestMethod.GET },
-            // { path: 'kind', method: RequestMethod.GET },
-            // { path: 'kind/:id', method: RequestMethod.GET },
-            // { path: 'product', method: RequestMethod.GET },
-            // { path: 'product/:id', method: RequestMethod.GET },
-            'auth/(.*)',
-        );
-        // .forRoutes('*');
+        consumer
+            .apply(AdminRolePermissionMiddleware)
+            .exclude(
+                { path: 'category', method: RequestMethod.GET },
+                { path: 'category/:id', method: RequestMethod.GET },
+                { path: 'kind', method: RequestMethod.GET },
+                { path: 'kind/:id', method: RequestMethod.GET },
+                { path: 'product', method: RequestMethod.GET },
+                { path: 'product/:id', method: RequestMethod.GET },
+                'auth/(.*)',
+            )
+            .forRoutes(CategoryController, KindController, ProductController);
     }
 }
