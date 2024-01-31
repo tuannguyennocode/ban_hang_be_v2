@@ -51,8 +51,8 @@ export class UserService {
 
     async signIn(signInUserDto: SignInUserDto): Promise<SuccessResponse> {
         const { username, password } = signInUserDto;
-        const userByPhone = await this.userModel.findOneByPhoneForAuthentication(username);
-        const userByEmail = await this.userModel.findOneByEmailForAuthentication(username);
+        const userByPhone = await this.userModel.findUserByPhoneForAuthentication(username);
+        const userByEmail = await this.userModel.findUserByEmailForAuthentication(username);
         let user: User;
         if (userByPhone == null && userByEmail == null) {
             throw new ConflictException(errorMessages.user.wrongCredentials);
@@ -65,15 +65,15 @@ export class UserService {
         if (await bcrypt.compare(password, user?.password)) {
             const tokens = await this.getTokens(user);
             const response = { ...tokens, role: user.role };
-            return setSuccessResponse('Đăng nhập thành công', response);
+            return setSuccessResponse('Sign in success', response);
         } else {
             throw new ConflictException(errorMessages.user.wrongCredentials);
         }
     }
     async signUp(@Body() signUpUserDto: SignUpUserDto): Promise<SuccessResponse> {
         const { password, email, phone, passwordConfirm } = signUpUserDto;
-        const userByPhone = await this.userModel.findOneByPhoneForAuthentication(phone);
-        const userByEmail = await this.userModel.findOneByEmailForAuthentication(email);
+        const userByPhone = await this.userModel.findUserByPhoneForAuthentication(phone);
+        const userByEmail = await this.userModel.findUserByEmailForAuthentication(email);
         if (userByPhone) {
             throw new ConflictException(errorMessages.user.phoneAlreadyExist);
         } else if (userByEmail) {
@@ -83,7 +83,7 @@ export class UserService {
         } else {
             signUpUserDto.password = await this.hashByBcrypt(password);
             const user = await this.userModel.create(signUpUserDto);
-            return setSuccessResponse('Đăng ký tài khoản thành công', user);
+            return setSuccessResponse('Sign up success', user);
         }
     }
 
@@ -93,5 +93,14 @@ export class UserService {
         const [items, totalElements] = await this.userModel.findAllUser(page, pageSize, sortBy, sortOrder, filter);
         const totalPages = Math.ceil(totalElements / pageSize);
         return setSuccessResponse('Get list category success', { content: items, totalElements, totalPages });
+    }
+
+    async getProfile(id: string): Promise<SuccessResponse> {
+        const user = await this.userModel.findUserById(id);
+        if (!user) {
+            throw new ConflictException(errorMessages.user.notFound);
+        } else {
+            return setSuccessResponse('Get profile success', user);
+        }
     }
 }

@@ -40,6 +40,10 @@ export const errorMessages = {
         },
     },
     user: {
+        notFound: {
+            message: 'User not found!',
+            code: codeError.NOT_FOUND + 'USER-NOT-FOUND',
+        },
         wrongCredentials: {
             message: 'Username or password is not correct!',
             code: codeError.NOT_FOUND + 'USERNAME-OR-PASSWORD-NOT-CORRECT',

@@ -13,10 +13,10 @@ export class UserModel {
         const user = this.userModel.create(signUpUserDto);
         return (await user).save();
     }
-    async findOneByPhoneForAuthentication(phone: string) {
+    async findUserByPhoneForAuthentication(phone: string) {
         return await this.userModel.findOne({ phone }).exec();
     }
-    async findOneByEmailForAuthentication(email: string) {
+    async findUserByEmailForAuthentication(email: string) {
         return await this.userModel.findOne({ email }).exec();
     }
     async findAllUser(
@@ -36,5 +36,8 @@ export class UserModel {
                 .sort({ [sortBy]: sortOrder === 'DESC' ? -1 : 1 }),
             this.userModel.countDocuments(),
         ]);
+    }
+    async findUserById(id: string): Promise<User> {
+        return await this.userModel.findById(id).select('-password').exec();
     }
 }
