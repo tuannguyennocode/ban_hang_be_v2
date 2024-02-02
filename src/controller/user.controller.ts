@@ -1,6 +1,6 @@
 import { Controller, DefaultValuePipe, Get, ParseIntPipe, Query, Request } from '@nestjs/common';
 import { UserService } from '../service/user.service';
-import { Role } from '../constant';
+import { Public, Role } from '../constant';
 
 @Controller('user')
 export class UserController {
@@ -23,6 +23,7 @@ export class UserController {
         return this.userService.findAll(page, pageSize, filter);
     }
 
+    @Public()
     @Get('profile')
     getProfile(@Request() req: any) {
         return this.userService.getProfile(req.user.id);
