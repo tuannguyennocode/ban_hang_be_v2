@@ -2,11 +2,13 @@ import { Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { FirebaseService } from '../service/firebase.service';
+import { Public } from '../constant';
 
 @Controller('file')
 export class FirebaseController {
     constructor(private readonly firebaseService: FirebaseService) {}
-
+    
+    @Public()
     @Get('download/:fileName')
     async downloadFile(@Param('fileName') fileName: string, @Res() res: Response) {
         try {

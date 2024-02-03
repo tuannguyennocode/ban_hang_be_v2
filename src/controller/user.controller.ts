@@ -1,6 +1,6 @@
 import { Controller, DefaultValuePipe, Get, ParseIntPipe, Query, Request } from '@nestjs/common';
+import { Role } from '../constant';
 import { UserService } from '../service/user.service';
-import { Public, Role } from '../constant';
 
 @Controller('user')
 export class UserController {
