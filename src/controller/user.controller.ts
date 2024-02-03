@@ -22,7 +22,6 @@ export class UserController {
         return this.userService.findAll(page, pageSize, filter);
     }
 
-    @Public()
     @Get('profile')
     getProfile(@Request() req: any) {
         return this.userService.getProfile(req.user.id);
