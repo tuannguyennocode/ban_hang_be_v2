@@ -1,17 +1,19 @@
-import { Model, Types } from 'mongoose';
 import { Injectable } from '@nestjs/common';
+import { Model, Types } from 'mongoose';
 
-import { Kind } from '../schema/kind.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateKindDto } from '../dto/kind/create-kind.dto';
 import { UpdateKindDto } from '../dto/kind/update-kind.dto';
 import { Category } from '../schema/category.schema';
+import { Kind } from '../schema/kind.schema';
+import { Product } from '../schema/product.schema';
 
 @Injectable()
 export class KindModel {
     constructor(
         @InjectModel(Kind.name) private readonly kindModel: Model<Kind>,
         @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
+        @InjectModel(Product.name) private readonly productModel: Model<Product>,
     ) {}
 
     async create(createKindDto: CreateKindDto) {
@@ -44,13 +46,16 @@ export class KindModel {
         return await this.kindModel.findById(id).populate('category', 'name');
     }
 
-    async updateKind(id: string, updateCategoryDto: UpdateKindDto): Promise<Kind> {
-        updateCategoryDto.updatedAt = new Date();
-        return await this.kindModel.findByIdAndUpdate(id, updateCategoryDto, { new: true });
+    async updateKind(id: string, updateKindDto: UpdateKindDto): Promise<Kind> {
+        updateKindDto.updatedAt = new Date();
+        return await this.kindModel.findByIdAndUpdate(id, updateKindDto, { new: true });
     }
-
+    async updateProducts(kindId: string, productId: string) {
+        await this.kindModel.updateOne({ _id: kindId }, { $push: { products: productId } });
+    }
     async deleteKind(id: string): Promise<Kind> {
         await this.categoryModel.updateMany({ kinds: id }, { $pull: { kinds: id } });
+        await this.productModel.deleteMany({ kind: new Types.ObjectId(id) });
         return await this.kindModel.findByIdAndDelete(id);
     }
 }

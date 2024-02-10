@@ -13,10 +13,16 @@ export class CategoryService {
         return setSuccessResponse('Create category success');
     }
 
-    async findAll(page: number, pageSize: number): Promise<SuccessResponse> {
+    async findAll(page: number, pageSize: number, filter: object): Promise<SuccessResponse> {
         const sortBy = 'createdAt';
         const sortOrder = 'ASC';
-        const [items, totalElements] = await this.categoryModel.findAllCategory(page, pageSize, sortBy, sortOrder);
+        const [items, totalElements] = await this.categoryModel.findAllCategory(
+            page,
+            pageSize,
+            sortBy,
+            sortOrder,
+            filter,
+        );
         const totalPages = Math.ceil(totalElements / pageSize);
         return setSuccessResponse('Get list category success', { content: items, totalElements, totalPages });
     }
