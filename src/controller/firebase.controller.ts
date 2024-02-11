@@ -7,7 +7,7 @@ import { Public } from '../constant';
 @Controller('file')
 export class FirebaseController {
     constructor(private readonly firebaseService: FirebaseService) {}
-    
+
     @Public()
     @Get('download/:fileName')
     async downloadFile(@Param('fileName') fileName: string, @Res() res: Response) {

@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { SignInUserDto } from '../dto/user/signin-user.dto';
-import { SignUpUserDto } from '../dto/user/signup-user.dto';
+import { SignInUserDto } from '../dto/auth/signin-user.dto';
+import { SignUpUserDto } from '../dto/auth/signup-user.dto';
 import { UserService } from '../service/user.service';
 import { Public } from '../constant';
 // import { CreateUserDto } from '../dto/user/signup-user.dto';

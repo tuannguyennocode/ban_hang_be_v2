@@ -1,6 +1,7 @@
 import { Role } from '../../constant';
+import { BaseDto } from '../base.dto';
 
-export class SignUpUserDto {
+export class CreateUserDto extends BaseDto {
     phone: string;
     email: string;
     name: string;

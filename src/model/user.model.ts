@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 import { InjectModel } from '@nestjs/mongoose';
-import { SignUpUserDto } from '../dto/user/signup-user.dto';
+import { SignUpUserDto } from '../dto/auth/signup-user.dto';
 import { User } from '../schema/user.schema';
+import { UpdateUserDto } from '../dto/user/update-user.dto';
 
 @Injectable()
 export class UserModel {
@@ -39,5 +40,10 @@ export class UserModel {
     }
     async findUserById(id: string): Promise<User> {
         return await this.userModel.findById(id).select('-password').exec();
+    }
+
+    async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+        updateUserDto.updatedAt = new Date();
+        return await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
     }
 }

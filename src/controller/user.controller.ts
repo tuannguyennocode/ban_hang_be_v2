@@ -1,6 +1,7 @@
-import { Controller, DefaultValuePipe, Get, ParseIntPipe, Query, Request } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Get, ParseIntPipe, Post, Query, Request } from '@nestjs/common';
 import { Role } from '../constant';
 import { UserService } from '../service/user.service';
+import { CreateUserDto } from '../dto/user/create-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -25,5 +26,10 @@ export class UserController {
     @Get('profile')
     getProfile(@Request() req: any) {
         return this.userService.getProfile(req.user.id);
+    }
+
+    @Post()
+    create(@Body() createUserDto: CreateUserDto) {
+        return this.userService.create(createUserDto);
     }
 }
