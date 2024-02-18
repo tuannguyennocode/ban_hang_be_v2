@@ -3,6 +3,7 @@ import {
     Controller,
     DefaultValuePipe,
     Get,
+    HttpStatus,
     Param,
     ParseIntPipe,
     Post,
@@ -53,5 +54,14 @@ export class UserController {
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.userService.getProfile(id);
+    }
+    @Post('webhook')
+    handleWebhook(@Body() payload: any) {
+        // Xử lý payload từ GitHub
+        console.log('Received a push event from GitHub');
+        console.log('Payload:', payload);
+
+        // Phản hồi thành công cho GitHub
+        return HttpStatus.OK;
     }
 }
