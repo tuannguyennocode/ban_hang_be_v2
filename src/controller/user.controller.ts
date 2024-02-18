@@ -11,7 +11,7 @@ import {
     Query,
     Request,
 } from '@nestjs/common';
-import { Role } from '../constant';
+import { Public, Role } from '../constant';
 import { UserService } from '../service/user.service';
 import { CreateUserDto } from '../dto/user/create-user.dto';
 import { UpdateUserDto } from '../dto/user/update-user.dto';
@@ -55,6 +55,7 @@ export class UserController {
     findOne(@Param('id') id: string) {
         return this.userService.getProfile(id);
     }
+    @Public()
     @Post('webhook')
     handleWebhook(@Body() payload: any) {
         // Xử lý payload từ GitHub
