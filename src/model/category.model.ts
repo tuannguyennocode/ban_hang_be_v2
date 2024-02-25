@@ -33,6 +33,7 @@ export class CategoryModel {
                 .find(filter)
                 .skip(skip)
                 .limit(limit)
+                .populate('kinds')
                 .sort({ [sortBy]: sortOrder === 'DESC' ? -1 : 1 }),
             this.categoryModel.countDocuments(),
         ]);
@@ -45,8 +46,11 @@ export class CategoryModel {
         updateCategoryDto.updatedAt = new Date();
         return await this.categoryModel.findByIdAndUpdate(id, updateCategoryDto, { new: true });
     }
-    async updateKinds(categoryId: string, kindId: string) {
-        await this.categoryModel.updateOne({ _id: categoryId }, { $push: { kinds: kindId } });
+    async updateKinds(categoryId: string, kind: Kind) {
+        await this.categoryModel.updateOne(
+            { _id: categoryId },
+            { $push: { kinds: { _id: kind._id, name: kind.name } } },
+        );
     }
     async deleteCategory(id: string): Promise<Category> {
         const kinds = await this.kindModel.find({ category: new Types.ObjectId(id) });

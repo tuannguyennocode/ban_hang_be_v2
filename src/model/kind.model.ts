@@ -54,7 +54,7 @@ export class KindModel {
         await this.kindModel.updateOne({ _id: kindId }, { $push: { products: productId } });
     }
     async deleteKind(id: string): Promise<Kind> {
-        await this.categoryModel.updateMany({ kinds: id }, { $pull: { kinds: id } });
+        await this.categoryModel.updateMany({ kinds: { _id: id } }, { $pull: { kinds: { _id: id } } });
         await this.productModel.deleteMany({ kind: new Types.ObjectId(id) });
         return await this.kindModel.findByIdAndDelete(id);
     }
