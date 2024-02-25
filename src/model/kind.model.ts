@@ -49,9 +49,9 @@ export class KindModel {
     async updateKind(id: string, updateKindDto: UpdateKindDto): Promise<Kind> {
         updateKindDto.updatedAt = new Date();
         const kind = await this.kindModel.findById(id);
-        await this.categoryModel.findByIdAndUpdate(
-            { _id: kind.category, kinds: { _id: id } },
-            { $set: { kinds: { name: updateKindDto.name } } },
+        await this.categoryModel.findOneAndUpdate(
+            { _id: kind.category, 'kinds._id': kind._id },
+            { $set: { 'kinds.$.name': updateKindDto.name } },
         );
         return await this.kindModel.findByIdAndUpdate(id, updateKindDto, { new: true });
     }
