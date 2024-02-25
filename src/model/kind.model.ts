@@ -48,6 +48,7 @@ export class KindModel {
 
     async updateKind(id: string, updateKindDto: UpdateKindDto): Promise<Kind> {
         updateKindDto.updatedAt = new Date();
+        await this.categoryModel.updateOne({ kinds: { _id: id } }, { $set: { kinds: { name: updateKindDto.name } } });
         return await this.kindModel.findByIdAndUpdate(id, updateKindDto, { new: true });
     }
     async updateProducts(kindId: string, productId: string) {
