@@ -48,14 +48,22 @@ export class KindModel {
 
     async updateKind(id: string, updateKindDto: UpdateKindDto): Promise<Kind> {
         updateKindDto.updatedAt = new Date();
-        await this.categoryModel.updateMany({ kinds: { _id: id } }, { $set: { kinds: { name: updateKindDto.name } } });
+        const kind = await this.kindModel.findById(id);
+        await this.categoryModel.findByIdAndUpdate(
+            { _id: kind.category, kinds: { _id: id } },
+            { $set: { kinds: { name: updateKindDto.name } } },
+        );
         return await this.kindModel.findByIdAndUpdate(id, updateKindDto, { new: true });
     }
     async updateProducts(kindId: string, productId: string) {
         await this.kindModel.updateOne({ _id: kindId }, { $push: { products: productId } });
     }
     async deleteKind(id: string): Promise<Kind> {
-        await this.categoryModel.updateMany({ kinds: { _id: id } }, { $pull: { kinds: { _id: id } } });
+        const kind = await this.kindModel.findById(id);
+        await this.categoryModel.updateOne(
+            { _id: kind.category },
+            { $pull: { kinds: { _id: new Types.ObjectId(id) } } },
+        );
         await this.productModel.deleteMany({ kind: new Types.ObjectId(id) });
         return await this.kindModel.findByIdAndDelete(id);
     }
