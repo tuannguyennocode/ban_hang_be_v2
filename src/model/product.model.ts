@@ -37,15 +37,14 @@ export class ProductModel {
             const productIds = kinds.flatMap((kind) => kind.products);
             filter = { ...filter, _id: { $in: productIds } };
         }
-        return await Promise.all([
-            this.productModel
-                .find(filter)
-                .skip(skip)
-                .limit(limit)
-                .populate('kind', 'name category')
-                .sort({ [sortBy]: sortOrder === 'DESC' ? -1 : 1 }),
-            this.productModel.countDocuments(),
-        ]);
+
+        const query = this.productModel
+            .find(filter)
+            .skip(skip)
+            .limit(limit)
+            .populate('kind', 'name category')
+            .sort({ [sortBy]: sortOrder === 'DESC' ? -1 : 1 });
+        return await Promise.all([query, query.countDocuments()]);
     }
 
     async findProductById(id: string): Promise<Product> {
