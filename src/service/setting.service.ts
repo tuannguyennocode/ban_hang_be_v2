@@ -14,7 +14,7 @@ export class SettingService {
 
     async findAll() {
         const setting = await this.settingModel.findAllSetting();
-        return setSuccessResponse('Get list setting success', setting);
+        return setSuccessResponse('Get list setting success', { content: setting });
     }
 
     async update(id: string, updateSettingDto: UpdateSettingDto) {
