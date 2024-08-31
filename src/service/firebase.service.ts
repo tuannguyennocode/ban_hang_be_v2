@@ -57,7 +57,18 @@ export class FirebaseService {
                     .on('error', reject)
                     .on('finish', resolve);
             });
-            return setSuccessResponse('Upload file success', { fileName });
+
+            let urlFile: string;
+            await fileUpload
+                .getSignedUrl({
+                    action: 'read',
+                    expires: '03-09-2491',
+                })
+                .then((signedUrls) => {
+                    urlFile = signedUrls.toString();
+                });
+
+            return setSuccessResponse('Upload file success', { fileName, urlFile });
         } catch (error) {
             throw new ConflictException(error);
         }

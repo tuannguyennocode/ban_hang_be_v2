@@ -1,13 +1,15 @@
 import { Body, ConflictException, Injectable } from '@nestjs/common';
 import { SuccessResponse, setSuccessResponse } from '../config/response/success';
 import { errorMessages } from '../config/response/errors/custom';
-import { JWT_SECRET } from '../constant';
+import { JWT_SECRET, Role } from '../constant';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserModel } from '../model/user.model';
-import { SignUpUserDto } from '../dto/user/signup-user.dto';
-import { SignInUserDto } from '../dto/user/signin-user.dto';
+import { SignUpUserDto } from '../dto/auth/signup-user.dto';
+import { SignInUserDto } from '../dto/auth/signin-user.dto';
 import { User } from '../schema/user.schema';
+import { CreateUserDto } from '../dto/user/create-user.dto';
+import { UpdateUserDto } from '../dto/user/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -64,7 +66,7 @@ export class UserService {
 
         if (await bcrypt.compare(password, user?.password)) {
             const tokens = await this.getTokens(user);
-            const response = { ...tokens, role: user.role };
+            const response = { ...tokens, role: user.role, user: user };
             return setSuccessResponse('Sign in success', response);
         } else {
             throw new ConflictException(errorMessages.user.wrongCredentials);
@@ -87,12 +89,32 @@ export class UserService {
         }
     }
 
+    async create(@Body() createUserDto: CreateUserDto): Promise<SuccessResponse> {
+        const { password, email, phone, passwordConfirm } = createUserDto;
+        const userByPhone = await this.userModel.findUserByPhoneForAuthentication(phone);
+        const userByEmail = await this.userModel.findUserByEmailForAuthentication(email);
+        if (userByPhone) {
+            throw new ConflictException(errorMessages.user.phoneAlreadyExist);
+        } else if (userByEmail) {
+            throw new ConflictException(errorMessages.user.emailAlreadyExist);
+        } else if (password !== passwordConfirm) {
+            throw new ConflictException(errorMessages.user.passwordConfirmNotMatch);
+        } else {
+            createUserDto.password = await this.hashByBcrypt(password);
+            const user = await this.userModel.create(createUserDto);
+            return setSuccessResponse('Create user success', user);
+        }
+    }
+
     async findAll(page: number, pageSize: number, filter: object): Promise<SuccessResponse> {
         const sortBy = 'createdAt';
         const sortOrder = 'ASC';
-        const [items, totalElements] = await this.userModel.findAllUser(page, pageSize, sortBy, sortOrder, filter);
+        const [items, totalElements] = await this.userModel.findAllUser(page, pageSize, sortBy, sortOrder, {
+            ...filter,
+            role: Role.USER,
+        });
         const totalPages = Math.ceil(totalElements / pageSize);
-        return setSuccessResponse('Get list category success', { content: items, totalElements, totalPages });
+        return setSuccessResponse('Get list user success', { content: items, totalElements, totalPages });
     }
 
     async getProfile(id: string): Promise<SuccessResponse> {
@@ -102,5 +124,13 @@ export class UserService {
         } else {
             return setSuccessResponse('Get profile success', user);
         }
+    }
+
+    async update(id: string, updateUserDto: UpdateUserDto): Promise<SuccessResponse> {
+        const userUpdate = await this.userModel.updateUser(id, updateUserDto);
+        if (!userUpdate) {
+            throw new ConflictException(errorMessages.user.notFound);
+        }
+        return setSuccessResponse('Update user success');
     }
 }

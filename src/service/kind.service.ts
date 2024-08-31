@@ -20,7 +20,7 @@ export class KindService {
             throw new ConflictException(errorMessages.category.notFound);
         }
         const kind = await this.kindModel.create(createKindDto);
-        await this.categoryModel.updateKinds(categoryId, kind.id);
+        await this.categoryModel.updateKinds(categoryId, kind);
         return setSuccessResponse('Create kind success');
     }
     async findAll(page: number, pageSize: number, filter: object): Promise<SuccessResponse> {

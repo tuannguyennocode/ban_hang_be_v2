@@ -23,7 +23,7 @@ export class ProductService {
         await this.kindModel.updateProducts(kindId, product.id);
         return setSuccessResponse('Create product success');
     }
-    async findAll(page: number, pageSize: number, filter: object): Promise<SuccessResponse> {
+    async findAll(page: number, pageSize: number, filter: object, categoryId: string): Promise<SuccessResponse> {
         const sortBy = 'createdAt';
         const sortOrder = 'ASC';
         const [items, totalElements] = await this.productModel.findAllProduct(
@@ -32,6 +32,7 @@ export class ProductService {
             sortBy,
             sortOrder,
             filter,
+            categoryId,
         );
         const totalPages = Math.ceil(totalElements / pageSize);
         return setSuccessResponse('Get list product success', { content: items, totalElements, totalPages });

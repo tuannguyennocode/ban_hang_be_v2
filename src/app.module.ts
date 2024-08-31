@@ -15,6 +15,7 @@ import { UserModule } from './module/user.module';
 import { CategoryController } from './controller/category.controller';
 import { KindController } from './controller/kind.controller';
 import { ProductController } from './controller/product.controller';
+import { BannerModule } from './module/banner.module';
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -31,6 +32,7 @@ const ENV = process.env.NODE_ENV;
         ProductModule,
         FirebaseModule,
         UserModule,
+        BannerModule,
     ],
     controllers: [AppController],
     providers: [
