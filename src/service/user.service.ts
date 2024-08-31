@@ -1,7 +1,7 @@
 import { Body, ConflictException, Injectable } from '@nestjs/common';
 import { SuccessResponse, setSuccessResponse } from '../config/response/success';
 import { errorMessages } from '../config/response/errors/custom';
-import { JWT_SECRET } from '../constant';
+import { JWT_SECRET, Role } from '../constant';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserModel } from '../model/user.model';
@@ -66,7 +66,7 @@ export class UserService {
 
         if (await bcrypt.compare(password, user?.password)) {
             const tokens = await this.getTokens(user);
-            const response = { ...tokens, role: user.role };
+            const response = { ...tokens, role: user.role, user: user };
             return setSuccessResponse('Sign in success', response);
         } else {
             throw new ConflictException(errorMessages.user.wrongCredentials);
@@ -109,9 +109,12 @@ export class UserService {
     async findAll(page: number, pageSize: number, filter: object): Promise<SuccessResponse> {
         const sortBy = 'createdAt';
         const sortOrder = 'ASC';
-        const [items, totalElements] = await this.userModel.findAllUser(page, pageSize, sortBy, sortOrder, filter);
+        const [items, totalElements] = await this.userModel.findAllUser(page, pageSize, sortBy, sortOrder, {
+            ...filter,
+            role: Role.USER,
+        });
         const totalPages = Math.ceil(totalElements / pageSize);
-        return setSuccessResponse('Get list category success', { content: items, totalElements, totalPages });
+        return setSuccessResponse('Get list user success', { content: items, totalElements, totalPages });
     }
 
     async getProfile(id: string): Promise<SuccessResponse> {

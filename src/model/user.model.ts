@@ -32,6 +32,7 @@ export class UserModel {
         return await Promise.all([
             this.userModel
                 .find(filter)
+                .select('-password')
                 .skip(skip)
                 .limit(limit)
                 .sort({ [sortBy]: sortOrder === 'DESC' ? -1 : 1 }),

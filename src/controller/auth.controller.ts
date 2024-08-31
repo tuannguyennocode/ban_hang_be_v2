@@ -3,8 +3,6 @@ import { SignInUserDto } from '../dto/auth/signin-user.dto';
 import { SignUpUserDto } from '../dto/auth/signup-user.dto';
 import { UserService } from '../service/user.service';
 import { Public } from '../constant';
-// import { CreateUserDto } from '../dto/user/signup-user.dto';
-// import { UpdateUserDto } from '../dto/user/update-user.dto';
 
 @Controller('auth')
 export class AuthController {

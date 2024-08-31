@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseSchemaProps } from './base.schema';
 
 @Schema()
-export class Setting extends BaseSchemaProps {
+export class Banner extends BaseSchemaProps {
     @Prop()
-    banner: string[];
+    image: string;
 }
-export const SettingSchema = SchemaFactory.createForClass(Setting);
+export const BannerSchema = SchemaFactory.createForClass(Banner);
