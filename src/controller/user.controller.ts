@@ -2,6 +2,7 @@ import {
     Body,
     Controller,
     DefaultValuePipe,
+    Delete,
     Get,
     HttpStatus,
     Param,
@@ -55,6 +56,12 @@ export class UserController {
     findOne(@Param('id') id: string) {
         return this.userService.getProfile(id);
     }
+
+    @Delete(':id')
+    delete(@Param('id') id: string) {
+        return this.userService.delete(id);
+    }
+
     @Public()
     @Post('webhook')
     handleWebhook(@Body() payload: any) {

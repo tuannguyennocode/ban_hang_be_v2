@@ -47,4 +47,7 @@ export class UserModel {
         updateUserDto.updatedAt = new Date();
         return await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
     }
+    async deleteUser(id: string): Promise<User> {
+        return await this.userModel.findByIdAndDelete(id);
+    }
 }

@@ -133,4 +133,12 @@ export class UserService {
         }
         return setSuccessResponse('Update user success');
     }
+
+    async delete(id: string): Promise<SuccessResponse> {
+        const userDelete = await this.userModel.deleteUser(id);
+        if (!userDelete) {
+            throw new ConflictException(errorMessages.user.notFound);
+        }
+        return setSuccessResponse('Delete user success');
+    }
 }
