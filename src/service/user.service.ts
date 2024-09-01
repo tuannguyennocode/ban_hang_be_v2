@@ -108,7 +108,7 @@ export class UserService {
 
     async findAll(page: number, pageSize: number, filter: object): Promise<SuccessResponse> {
         const sortBy = 'createdAt';
-        const sortOrder = 'ASC';
+        const sortOrder = 'DESC';
         const [items, totalElements] = await this.userModel.findAllUser(page, pageSize, sortBy, sortOrder, {
             ...filter,
             role: Role.USER,
