@@ -36,7 +36,7 @@ export class UserModel {
                 .skip(skip)
                 .limit(limit)
                 .sort({ [sortBy]: sortOrder === 'DESC' ? -1 : 1 }),
-            this.userModel.countDocuments(),
+            this.userModel.countDocuments({ ...filter }),
         ]);
     }
     async findUserById(id: string): Promise<User> {
